@@ -19,9 +19,9 @@ const (
 )
 
 var (
-	mailServerHost = MailServerHost126
+	mailServerHost = MailServerHostExmail
 	mailNickname   = "no-reply"
-	mailUsername   = "xxx@126.com"
+	mailUsername   = "no-reply@airdb.net"
 	mailPassword   = ""
 	mailServerPort = 465
 )
