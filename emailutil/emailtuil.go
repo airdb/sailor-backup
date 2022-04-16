@@ -12,9 +12,17 @@ type MailUser struct {
 	Name  string
 }
 
+const (
+	MailServerHostExmail = "smtp.exmail.qq.com"
+	MailServerHost126    = "smtp.126.com"
+	MailServerHost163    = "smtp.163.com"
+)
+
 var (
-	#mailServerHost = "smtp.exmail.qq.com"
-	mailServerHost = ""
+	mailServerHost = MailServerHost126
+	mailNickname   = "no-reply"
+	mailUsername   = "xxx@126.com"
+	mailPassword   = ""
 	mailServerPort = 465
 )
 
@@ -28,17 +36,12 @@ var maintainers = []MailUser{
 func SendEmail(toEmails, subject, content string) {
 	m := gomail.NewMessage()
 
-	sender := MailUser{
-		Email: "dean@baobeihuijia.com",
-		Name:  "Hello",
-	}
-
 	ccList := []string{}
 	for _, maintainer := range maintainers {
 		ccList = append(ccList, m.FormatAddress(maintainer.Email, maintainer.Name))
 	}
 
-	m.SetAddressHeader("From", sender.Email, sender.Name)
+	m.SetAddressHeader("From", mailUsername, mailNickname)
 
 	toList := []string{}
 	for _, toEmail := range strings.Split(toEmails, ",") {
@@ -49,12 +52,11 @@ func SendEmail(toEmails, subject, content string) {
 
 	m.SetHeader("Cc", ccList...)
 
-	// subject := fmt.Sprintf("%s[Space CertMS] %s", os.Getenv("ENV"), domain)
 	m.SetHeader("Subject", subject)
 
 	m.SetBody("text/html", content)
 
-	d := gomail.NewDialer(mailServerHost, mailServerPort, sender.Email, "")
+	d := gomail.NewDialer(mailServerHost, mailServerPort, mailUsername, mailPassword)
 	fmt.Println("dd", d)
 	if err := d.DialAndSend(m); err != nil {
 		fmt.Println("err", err.Error())
