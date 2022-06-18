@@ -21,9 +21,5 @@ func TestRun(t *testing.T) {
 		return
 	}
 
-	for _, ipnet := range ips {
-		for _, ip := range ipnet["ipv4"] {
-			t.Log(ip)
-		}
-	}
+	t.Logf("AS number %s ipv4 count %d", asnum, len(ips))
 }
