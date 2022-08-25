@@ -17,6 +17,8 @@ Airdb reserved the error code range from 20000 to 24999 for defined Error Codes.
 
 [Error Codes](enum/code.go)
 
+## http client
+Try to use [req](https://github.com/imroc/req)
 
 ## Stargazers over time
 
